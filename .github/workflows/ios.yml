@@ -31,3 +31,28 @@ jobs:
         with:
           name: SevenZipFiles-iOS-Simulator
           path: build/Build/Products/Debug-iphonesimulator/SevenZipFiles.app
+      - name: Build iOS device app for sideloading
+        run: >-
+          xcodebuild -project SevenZipFiles.xcodeproj
+          -scheme SevenZipFiles
+          -configuration Release
+          -destination 'generic/platform=iOS'
+          -derivedDataPath build
+          PRODUCT_BUNDLE_IDENTIFIER=com.jkdqfj4gq4-maker.sevenzipfiles
+          CODE_SIGNING_ALLOWED=NO
+          build
+      - name: Package unsigned IPA
+        run: |
+          set -euo pipefail
+          APP_PATH="build/Build/Products/Release-iphoneos/SevenZipFiles.app"
+          test -d "$APP_PATH"
+          mkdir -p build/ipa/Payload
+          ditto "$APP_PATH" build/ipa/Payload/SevenZipFiles.app
+          ditto -c -k --sequesterRsrc --keepParent build/ipa/Payload SevenZipFiles-sideload.ipa
+          unzip -t SevenZipFiles-sideload.ipa
+      - name: Upload sideload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: SevenZipFiles-Sideload-IPA
+          path: SevenZipFiles-sideload.ipa
+          if-no-files-found: error
