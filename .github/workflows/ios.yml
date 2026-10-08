@@ -1,0 +1,33 @@
+name: iOS Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Build iOS Simulator app
+        run: >-
+          xcodebuild -project SevenZipFiles.xcodeproj
+          -scheme SevenZipFiles
+          -configuration Debug
+          -destination 'generic/platform=iOS Simulator'
+          -derivedDataPath build
+          CODE_SIGNING_ALLOWED=NO
+          build
+      - name: Upload simulator app
+        uses: actions/upload-artifact@v4
+        with:
+          name: SevenZipFiles-iOS-Simulator
+          path: build/Build/Products/Debug-iphonesimulator/SevenZipFiles.app

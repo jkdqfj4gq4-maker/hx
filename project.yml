@@ -1,0 +1,27 @@
+name: SevenZipFiles
+options:
+  deploymentTarget:
+    iOS: "18.0"
+packages:
+  SwiftArchive:
+    url: https://github.com/avdwerff/swift-archive.git
+    from: 0.5.1
+targets:
+  SevenZipFiles:
+    type: application
+    platform: iOS
+    sources:
+      - Sources
+    dependencies:
+      - package: SwiftArchive
+        product: SwiftArchive
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.SevenZipFiles
+        SWIFT_VERSION: "5.0"
+    info:
+      properties:
+        CFBundleDisplayName: 7Zip Files
+        UISupportsDocumentBrowser: true
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
