@@ -17,7 +17,7 @@ targets:
         product: SwiftArchive
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.SevenZipFiles
+        PRODUCT_BUNDLE_IDENTIFIER: com.jkdqfj4gq4-maker.sevenzipfiles
         SWIFT_VERSION: "5.0"
     info:
       path: Info.plist
