@@ -20,6 +20,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.example.SevenZipFiles
         SWIFT_VERSION: "5.0"
     info:
+      path: Info.plist
       properties:
         CFBundleDisplayName: 7Zip Files
         UISupportsDocumentBrowser: true
